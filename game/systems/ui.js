@@ -62,11 +62,7 @@ export function attachSlotEvents() {
           if (swapCooldown > 0) { dragSrc = null; return; }
           const srcArr = dragSrc.row === 'active' ? activeSlots : swapSlots;
           const dstArr = row === 'active' ? activeSlots : swapSlots;
-
-          for (let i = 0; i < ACTIVE_COUNT; i++) {
-            petalStateCache[i] = petals[i] ? { ...petals[i] } : null;
-          }
-
+          
           const a = dragSrc.idx;
           const b = idx;
 
