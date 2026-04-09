@@ -79,8 +79,10 @@ export function attachSlotEvents() {
 
           rebuildPetals();
 
-          if (petals[a]) petals[a].cooldown = 120;
-          if (petals[b]) petals[b].cooldown = 120;
+         const aIdx = dragSrc.row === 'active' ? dragSrc.idx : ACTIVE_COUNT + dragSrc.idx;
+         const bIdx = row === 'active' ? idx : ACTIVE_COUNT + idx;
+         if (petals[aIdx]) petals[aIdx].cooldown = 120;
+         if (petals[bIdx]) petals[bIdx].cooldown = 120;
 
           setSwapCooldown(SWAP_CD_MAX);
           buildPetalBarUI();
