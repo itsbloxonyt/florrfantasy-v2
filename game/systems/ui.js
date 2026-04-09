@@ -66,13 +66,13 @@ export function attachSlotEvents() {
           const a = dragSrc.idx;
           const b = idx;
 
-          for (let i = 0; i < ACTIVE_COUNT; i++) {
-            petalStateCache[i] = petals[i] ? { ...petals[i] } : null;
-          }
-
           const tmp = srcArr[a];
           srcArr[a] = dstArr[b];
           dstArr[b] = tmp;
+
+           for (let i = 0; i < ACTIVE_COUNT; i++) {
+            petalStateCache[i] = petals[i] ? { ...petals[i] } : null;
+          }
 
           rebuildPetals();
 
