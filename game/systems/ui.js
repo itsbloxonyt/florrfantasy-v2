@@ -59,6 +59,7 @@ export function attachSlotEvents() {
       el.addEventListener('mouseup', e => {
         e.stopPropagation();
         if(dragSrc && !(dragSrc.row===row && dragSrc.idx===idx)){
+          if (swapCooldown > 0) { dragSrc = null; return; }
           const srcArr = dragSrc.row === 'active' ? activeSlots : swapSlots;
           const dstArr = row === 'active' ? activeSlots : swapSlots;
 
