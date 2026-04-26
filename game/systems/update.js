@@ -117,6 +117,7 @@ export function update(canvas, faceCanvas, drawSmiley, triggerDeath, drawCooldow
   // Update mobs
   for(let i=mobs.length-1;i>=0;i--){
     const m = mobs[i];
+    if(m.hp <= 0){ killMob(i); continue; };
     m.spinAngle += 0.04;
     if(m.hitFlash>0) m.hitFlash--;
 
