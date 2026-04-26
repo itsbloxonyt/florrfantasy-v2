@@ -1,9 +1,9 @@
 import { WORLD_W, WORLD_H, ACTIVE_COUNT, player, mobs, drops, activeSlots, swapSlots, petals, petalStateCache, setDead, dead } from './state.js';
 import { rebuildPetals, spawnMob } from './content/petals.js';
-import { initInput } from './system/input.js';
-import { buildPetalBarUI, attachSlotEvents, updateHUD } from './system/ui.js';
-import { draw, drawSmiley, drawCooldown } from './system/render.js';
-import { update } from './system/update.js';
+import { initInput } from './systems/input.js';
+import { buildPetalBarUI, attachSlotEvents, updateHUD } from './systems/ui.js';
+import { draw, drawSmiley, drawCooldown } from './systems/render.js';
+import { update } from './systems/update.js';
 
 // ===================== CANVAS SETUP =====================
 const canvas = document.getElementById('c');
