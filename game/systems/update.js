@@ -79,6 +79,7 @@ export function update(canvas, faceCanvas, drawSmiley, triggerDeath, drawCooldow
        p.invincible = 60; // 👈 ~0.3 second grace period
        console.log("petal respawned, hp:", p.hp, "invincible:", p.invincible);
       }
+      console.log("broken timer:", p.respawnTimer, "broken:", p.broken);
       continue;
     }
     if(p.invincible > 0) p.invincible--;
