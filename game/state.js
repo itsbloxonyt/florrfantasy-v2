@@ -1,3 +1,7 @@
+import { PETAL_TYPES } from './content/petalDefs.js';
+import { MOB_TYPES } from './content/mobDefs.js';
+export { PETAL_TYPES, MOB_TYPES }; // re-export so other files still work
+
 // ===================== WORLD =====================
 export const WORLD_W = 2400;
 export const WORLD_H = 1740;
@@ -7,16 +11,7 @@ export const cam = { x: 0, y: 0 };
 
 export function worldToScreen(wx, wy) {
   return { x: wx - cam.x, y: wy - cam.y };
-}
-
-// ===================== PETAL TYPES =====================
-export const PETAL_TYPES = {
-  basic:     { name:'Basic',    color:'#ffffff', glow:'#ccccff', damage:10, cooldownAtk:120, cooldownIdle:200, r:10, emoji:'⚪', maxHp:40, respawnTime:120 },
-  healing:   { name:'Healing',  color:'#ff88aa', glow:'#ff44aa', damage:2,  cooldownAtk:120, cooldownIdle:200, r:10, emoji:'💗', healAmt:5, healCooldown:180, maxHp:25, respawnTime:180 },
-  lightning: { name:'Lightning',color:'#ffff44', glow:'#ffffaa', damage:14, cooldownAtk:120, cooldownIdle:200, r:10, emoji:'⚡', knockback:18, chain:true, maxHp:30, respawnTime:150 },
-  poison:    { name:'Poison',   color:'#88ff44', glow:'#44ff44', damage:4,  cooldownAtk:120, cooldownIdle:200, r:10, emoji:'☠️', poisonDps:6, poisonDur:180, maxHp:35, respawnTime:140 },
 };
-
 // ===================== PLAYER =====================
 export const player = {
   x: WORLD_W/2, y: WORLD_H/2,
@@ -56,15 +51,7 @@ export function setLastSwapTime(v) { lastSwapTime = v; }
 // ===================== MOBS =====================
 export const mobs = [];
 export const drops = [];
-
-export const MOB_TYPES = [
-  { color:'#ff6666', r:16, hp:20,  speed:0.9,  xp:5,  dmg:8,  name:'ladybug'  },
-  { color:'#ff9944', r:21, hp:45,  speed:0.65, xp:14, dmg:13, name:'bee'      },
-  { color:'#cc44ff', r:27, hp:90,  speed:0.5,  xp:28, dmg:20, name:'spider'   },
-  { color:'#ff2244', r:34, hp:170, speed:0.4,  xp:55, dmg:28, name:'centipede'},
-];
-
-// ===================== WORLD DECORATIONS =====================
+===================== WORLD DECORATIONS =====================
 export const grass = [];
 for(let i=0;i<600;i++){
   grass.push({
