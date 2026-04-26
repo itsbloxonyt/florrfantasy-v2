@@ -148,6 +148,7 @@ export function update(canvas, faceCanvas, drawSmiley, triggerDeath, drawCooldow
           m.hp -= p.damage * dmgMult;
           const def = PETAL_TYPES[p.type];
           p.cooldown = petalState==='attack' ? def.cooldownAtk : def.cooldownIdle;
+          p.hp = def.maxHp; // 👈 reset hp after each hit
           m.hitFlash = 10;
 
           if(p.type==='lightning'){
