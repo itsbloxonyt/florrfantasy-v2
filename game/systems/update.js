@@ -147,7 +147,7 @@ export function update(canvas, faceCanvas, drawSmiley, triggerDeath, drawCooldow
     if(p.hp<=0){ p.broken=true; p.respawnTimer=PETAL_TYPES[p.type].respawnTime; continue; }
     p.cooldown = petalState==='attack' ? def.cooldownAtk : def.cooldownIdle;
     m.hitFlash = 10;
-
+  }
           if(p.type==='lightning'){
             const bx=m.x-player.x, by=m.y-player.y, bl=Math.hypot(bx,by)||1;
             m.x+=bx/bl*def.knockback; m.y+=by/bl*def.knockback;
