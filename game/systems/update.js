@@ -129,10 +129,33 @@ export function update(canvas, faceCanvas, drawSmiley, triggerDeath, drawCooldow
     if(md>1){ m.x+=(mdx/md)*m.speed; m.y+=(mdy/md)*m.speed; }
     m.x = Math.max(m.r, Math.min(WORLD_W-m.r, m.x));
     m.y = Math.max(m.r, Math.min(WORLD_H-m.r, m.y));
+    
+    // Mob to mob collision
+    for(let i=0;i<mobs.length;i++){
+      for(let j=i+1;j<mobs.length;j++){
+        const a = mobs[i], b = mobs[j];
+        const dx = b.x-a.x, dy = b.y-a.y;
+        const dist = Math.hypot(dx,dy);
+        const minDist = a.r+b.r;
+        if(dist<minDist && dist>0){
+          const push = (minDist-dist)/2;
+          const nx = dx/dist, ny = dy/dist;
+          a.x -= nx*push; a.y -= ny*push;
+          b.x += nx*push; b.y += ny*push;
+        }
+      }
+    }
 
-    if(player.invincible<=0 && Math.hypot(player.x-m.x,player.y-m.y)<m.r+player.r-2){
-      player.hp -= m.dmg; player.invincible = 3;
-      if(player.hp<=0){ player.hp=0; triggerDeath(); return; }
+    if(Math.hypot(player.x-m.x,player.y-m.y)<m.r+player.r-2){
+      const dx = player.x-m.x, dy = player.y-m.y;
+      const dist = Math.hypot(dx,dy)||1;
+      const push = (m.r+player.r-dist);
+      player.x += (dx/dist)*push;
+      player.y += (dy/dist)*push;
+      if(player.invincible<=0){
+        player.hp -= m.dmg; player.invincible = 3;
+        if(player.hp<=0){ player.hp=0; triggerDeath(); return; }
+      }
     }
 
    for(const p of petals){
