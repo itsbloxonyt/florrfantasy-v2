@@ -81,6 +81,7 @@ export function update(canvas, faceCanvas, drawSmiley, triggerDeath, drawCooldow
       continue;
     }
     if(p.invincible > 0) p.invincible--;
+    if(p.hitCooldown > 0) p.hitCooldown--;
     const t = getPetalTarget(i, petalState);
     const spd = petalState==='defend' ? 0.32 : petalState==='attack' ? 0.18 : 0.2;
     p.x+=(t.x-p.x)*spd;
@@ -134,42 +135,40 @@ export function update(canvas, faceCanvas, drawSmiley, triggerDeath, drawCooldow
       if(player.hp<=0){ player.hp=0; triggerDeath(); return; }
     }
 
-    for(const p of petals){
-      if(p.broken) continue;
-      if(p.invincible > 0) continue;
-     if(p.cooldown === 0 && Math.hypot(p.x-m.x,p.y-m.y)<p.r+m.r){
-       const dmgMult = petalState==='defend' ? 0.35 : 1;
-       const def = PETAL_TYPES[p.type];
-       m.hp -= p.damage * dmgMult;
-       p.hp -= m.dmg * 0.15;
-       m.hitFlash = 10;
-       if(p.hp<=0){ 
-         p.broken=true; 
-         p.respawnTimer=PETAL_TYPES[p.type].respawnTime;
-         continue; 
-       }
-       // add a small contact cooldown so it doesn't hit every frame
-       p.cooldown = 5; // 👈 tiny cooldown between hits, not full cooldown
-        if(p.type==='lightning'){
-          const bx=m.x-player.x, by=m.y-player.y, bl=Math.hypot(bx,by)||1;
-          m.x+=bx/bl*def.knockback; m.y+=by/bl*def.knockback;
-          let nearest=null, nd=999;
-          for(const m2 of mobs){ if(m2===m) continue; const d2=Math.hypot(m2.x-m.x,m2.y-m.y); if(d2<nd){nd=d2;nearest=m2;} }
-          if(nearest && nd<120){ nearest.hp-=def.damage*0.6; nearest.hitFlash=8; }
-        }
-        if(p.type==='poison'){
-          m.poisoned = def.poisonDur;
-          m.poisonTimer = 0;
-        }
-        if(petalState==='defend'){
-          const bx=m.x-player.x, by=m.y-player.y, bl=Math.hypot(bx,by)||1;
-          m.x+=bx/bl*9; m.y+=by/bl*9;
-        }
-        if(m.hp<=0){ killMob(i); break; }
-      }
+   for(const p of petals){
+  if(p.broken) continue;
+  if(p.invincible > 0) continue;
+  if(p.cooldown === 0 && p.hitCooldown === 0 && Math.hypot(p.x-m.x,p.y-m.y)<p.r+m.r){
+    const dmgMult = petalState==='defend' ? 0.35 : 1;
+    const def = PETAL_TYPES[p.type];
+    m.hp -= p.damage * dmgMult;
+    p.hp -= m.dmg * 0.15;
+    p.hitCooldown = 5;
+    m.hitFlash = 10;
+    if(p.hp<=0){ 
+      p.broken=true;
+      p.respawnTimer=PETAL_TYPES[p.type].respawnTime;
+      p.cooldown = petalState==='attack' ? def.cooldownAtk : def.cooldownIdle;
+      continue; 
     }
+    if(p.type==='lightning'){
+      const bx=m.x-player.x, by=m.y-player.y, bl=Math.hypot(bx,by)||1;
+      m.x+=bx/bl*def.knockback; m.y+=by/bl*def.knockback;
+      let nearest=null, nd=999;
+      for(const m2 of mobs){ if(m2===m) continue; const d2=Math.hypot(m2.x-m.x,m2.y-m.y); if(d2<nd){nd=d2;nearest=m2;} }
+      if(nearest && nd<120){ nearest.hp-=def.damage*0.6; nearest.hitFlash=8; }
+    }
+    if(p.type==='poison'){
+      m.poisoned = def.poisonDur;
+      m.poisonTimer = 0;
+    }
+    if(petalState==='defend'){
+      const bx=m.x-player.x, by=m.y-player.y, bl=Math.hypot(bx,by)||1;
+      m.x+=bx/bl*9; m.y+=by/bl*9;
+    }
+    if(m.hp<=0){ killMob(i); break; }
   }
-
+}
   // Drops update
   for(let i=drops.length-1;i>=0;i--){
     const dr = drops[i]; dr.life--;
