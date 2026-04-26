@@ -77,7 +77,8 @@ export function update(canvas, faceCanvas, drawSmiley, triggerDeath, drawCooldow
        p.hp=def.maxHp; 
        p.cooldown=def.cooldownIdle;
        p.justReady = true; 
-       p.invincible = 20; // 👈 ~0.3 second grace period
+       p.invincible = 60; // 👈 ~0.3 second grace period
+       console.log("petal respawned, hp:", p.hp, "invincible:", p.invincible);
       }
       continue;
     }
@@ -140,6 +141,7 @@ export function update(canvas, faceCanvas, drawSmiley, triggerDeath, drawCooldow
       if(p.invincible > 0) continue;
       if(p.cooldown === 0 && Math.hypot(p.x-m.x,p.y-m.y)<p.r+m.r){
         p.hp -= m.dmg * 0.15;
+        console.log("petal hit, hp:", p.hp, "invincible:", p.invincible);
         if(p.hp<=0){ p.broken=true; p.respawnTimer=PETAL_TYPES[p.type].respawnTime; continue; }
         if(p.cooldown === 0){
           const dmgMult = petalState==='defend' ? 0.35 : 1;
