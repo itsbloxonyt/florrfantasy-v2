@@ -74,9 +74,9 @@ export function update(canvas, faceCanvas, drawSmiley, triggerDeath, drawCooldow
       if(p.respawnTimer<=0){
         p.broken=false;
         p.hp=def.maxHp;
-        p.cooldown=def.cooldownIdle;
+        p.cooldown=5;
         p.justReady = true;
-        p.invincible = 60;
+        p.invincible = 5;
       }
       continue;
     }
