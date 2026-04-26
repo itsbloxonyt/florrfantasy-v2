@@ -73,14 +73,15 @@ export function update(canvas, faceCanvas, drawSmiley, triggerDeath, drawCooldow
       p.respawnTimer--;
       p.x+=(player.x-p.x)*0.2; p.y+=(player.y-p.y)*0.2;
       if(p.respawnTimer<=0){ 
-      p.broken=false; 
-      p.hp=def.maxHp; 
-      p.cooldown=def.cooldownIdle;
-      p.justReady = true; 
-      p.invincible = 20; // 👈 ~0.3 second grace period
-     }
+       p.broken=false; 
+       p.hp=def.maxHp; 
+       p.cooldown=def.cooldownIdle;
+       p.justReady = true; 
+       p.invincible = 20; // 👈 ~0.3 second grace period
+      }
       continue;
     }
+    if(p.invincible > 0) p.invincible--;
     const t = getPetalTarget(i, petalState);
     const spd = petalState==='defend' ? 0.32 : petalState==='attack' ? 0.18 : 0.2;
     p.x+=(t.x-p.x)*spd;
@@ -136,7 +137,7 @@ export function update(canvas, faceCanvas, drawSmiley, triggerDeath, drawCooldow
 
     for(const p of petals){
       if(p.broken) continue;
-      if(p.invincible > 0){ p.invincible--; continue; }
+      if(p.invincible > 0) continue;
       if(p.cooldown === 0 && Math.hypot(p.x-m.x,p.y-m.y)<p.r+m.r){
         p.hp -= m.dmg * 0.15;
         if(p.hp<=0){ p.broken=true; p.respawnTimer=PETAL_TYPES[p.type].respawnTime; continue; }
