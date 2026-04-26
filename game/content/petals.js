@@ -31,6 +31,7 @@ export function rebuildPetals() {
       healTimer: prev ? prev.healTimer : 0,
       justReady: prev ? prev.justReady : false,
       invincible: prev ? prev.invincible : 0,
+      hitCooldown: 0
     });
   }
 
