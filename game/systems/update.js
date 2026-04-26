@@ -140,14 +140,13 @@ export function update(canvas, faceCanvas, drawSmiley, triggerDeath, drawCooldow
   if(p.broken) continue;
   if(p.invincible > 0) continue;
   if(p.cooldown === 0 && Math.hypot(p.x-m.x,p.y-m.y)<p.r+m.r){
-    if(p.cooldown === 0){
-      const dmgMult = petalState==='defend' ? 0.35 : 1;
-      m.hp -= p.damage * dmgMult;
-      const def = PETAL_TYPES[p.type];
-      p.hp -= m.dmg * 0.15; // 👈 moved here
-      if(p.hp<=0){ p.broken=true; p.respawnTimer=PETAL_TYPES[p.type].respawnTime; continue; }
-      p.cooldown = petalState==='attack' ? def.cooldownAtk : def.cooldownIdle;
-      m.hitFlash = 10;
+    const dmgMult = petalState==='defend' ? 0.35 : 1;
+    const def = PETAL_TYPES[p.type];
+    m.hp -= p.damage * dmgMult;
+    p.hp -= m.dmg * 0.15;
+    if(p.hp<=0){ p.broken=true; p.respawnTimer=PETAL_TYPES[p.type].respawnTime; continue; }
+    p.cooldown = petalState==='attack' ? def.cooldownAtk : def.cooldownIdle;
+    m.hitFlash = 10;
 
           if(p.type==='lightning'){
             const bx=m.x-player.x, by=m.y-player.y, bl=Math.hypot(bx,by)||1;
