@@ -146,10 +146,11 @@ export function update(canvas, faceCanvas, drawSmiley, triggerDeath, drawCooldow
       }
     }
 
+    // Player to mobs collision
     if(Math.hypot(player.x-m.x,player.y-m.y)<m.r+player.r-2){
       const dx = player.x-m.x, dy = player.y-m.y;
       const dist = Math.hypot(dx,dy)||1;
-      const push = (m.r+player.r-dist);
+      const push = (m.r+player.r-dist) * 3; // 👈 multiply by 3 for more bounce
       player.x += (dx/dist)*push;
       player.y += (dy/dist)*push;
       if(player.invincible<=0){
