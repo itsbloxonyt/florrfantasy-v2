@@ -48,10 +48,7 @@ export let lastSwapTime = 0;
 export function setSwapCooldown(v) { swapCooldown = v; }
 export function setLastSwapTime(v) { lastSwapTime = v; }
 
-// ===================== MOBS =====================
-export const mobs = [];
-export const drops = [];
-===================== WORLD DECORATIONS =====================
+// ===================== WORLD DECORATIONS =====================
 export const grass = [];
 for(let i=0;i<600;i++){
   grass.push({
