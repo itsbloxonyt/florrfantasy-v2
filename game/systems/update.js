@@ -2,7 +2,7 @@ import {
   WORLD_W, WORLD_H, SWAP_CD_MAX, PETAL_TYPES,
   cam, player, petals, petalState, setPetalState,
   mobs, drops, frame, setFrame, spawnTimer, setSpawnTimer,
-  dead, swapCooldown, setSwapCooldown,
+  dead, swapCooldown, setSwapCooldown, players,
 } from '../state.js';
 import { spawnMob, killMob, addPetalDrop } from '../content/petals.js';
 import { keys, mouse, handleInput } from './input.js';
