@@ -3,7 +3,7 @@ import {
   player, petals, setPetals, petalStateCache, activeSlots, swapSlots,
   mobs, drops, MOB_TYPES, WORLD_W, WORLD_H,
 } from '../state.js';
-import { buildPetalBarUI, attachSlotEvents } from '../system/ui.js';
+import { buildPetalBarUI, attachSlotEvents } from '../systems/ui.js';
 
 export function rebuildPetals() {
   const newPetals = [];
