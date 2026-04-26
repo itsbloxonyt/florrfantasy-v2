@@ -75,7 +75,7 @@ export function update(canvas, faceCanvas, drawSmiley, triggerDeath, drawCooldow
       if(p.respawnTimer<=0){ 
       p.broken=false; 
       p.hp=def.maxHp; 
-      p.cooldown=0;
+      p.cooldown=def.cooldownIdle;
       p.justReady = true; 
       p.invincible = 20; // 👈 ~0.3 second grace period
      }
