@@ -137,14 +137,19 @@ export function update(canvas, faceCanvas, drawSmiley, triggerDeath, drawCooldow
     for(const p of petals){
       if(p.broken) continue;
       if(p.invincible > 0) continue;
-      if(p.cooldown === 0 && Math.hypot(p.x-m.x,p.y-m.y)<p.r+m.r){
-        const dmgMult = petalState==='defend' ? 0.35 : 1;
-        const def = PETAL_TYPES[p.type];
-        m.hp -= p.damage * dmgMult;
-        p.cooldown = petalState==='attack' ? def.cooldownAtk : def.cooldownIdle; // 👈 move this up
-        m.hitFlash = 10;
-        p.hp -= m.dmg * 0.15;
-        if(p.hp<=0){ p.broken=true; p.respawnTimer=PETAL_TYPES[p.type].respawnTime; continue; };
+     if(p.cooldown === 0 && Math.hypot(p.x-m.x,p.y-m.y)<p.r+m.r){
+       const dmgMult = petalState==='defend' ? 0.35 : 1;
+       const def = PETAL_TYPES[p.type];
+       m.hp -= p.damage * dmgMult;
+       p.hp -= m.dmg * 0.15;
+       m.hitFlash = 10;
+       if(p.hp<=0){ 
+         p.broken=true; 
+         p.respawnTimer=PETAL_TYPES[p.type].respawnTime;
+         continue; 
+       }
+       // add a small contact cooldown so it doesn't hit every frame
+       p.cooldown = 5; // 👈 tiny cooldown between hits, not full cooldown
         if(p.type==='lightning'){
           const bx=m.x-player.x, by=m.y-player.y, bl=Math.hypot(bx,by)||1;
           m.x+=bx/bl*def.knockback; m.y+=by/bl*def.knockback;
