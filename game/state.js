@@ -1,6 +1,8 @@
 import { PETAL_TYPES } from './content/petalDefs.js';
 import { MOB_TYPES } from './content/mobDefs.js';
 export { PETAL_TYPES, MOB_TYPES }; // re-export so other files still work
+import { mobs, drops, players } from './state/gameState.js';
+export { mobs, drops, players };
 
 // ===================== WORLD =====================
 export const WORLD_W = 2400;
