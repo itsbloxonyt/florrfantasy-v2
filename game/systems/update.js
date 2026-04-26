@@ -47,8 +47,10 @@ export function update(canvas, faceCanvas, drawSmiley, triggerDeath, drawCooldow
   player.y = Math.max(player.r, Math.min(WORLD_H-player.r, player.y+vy*player.speed));
 
   // Camera
-  cam.x = Math.max(0, Math.min(WORLD_W-canvas.width,  player.x - canvas.width/2));
-  cam.y = Math.max(0, Math.min(WORLD_H-canvas.height, player.y - canvas.height/2));
+  const targetX = Math.max(0, Math.min(WORLD_W-canvas.width,  player.x - canvas.width/2));
+  const targetY = Math.max(0, Math.min(WORLD_H-canvas.height, player.y - canvas.height/2));
+  cam.x += (targetX - cam.x) * 0.08;
+  cam.y += (targetY - cam.y) * 0.08;
 
   // Mouse world pos
   mouse.wx = mouse.x + cam.x;
