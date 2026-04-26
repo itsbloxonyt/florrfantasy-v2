@@ -49,8 +49,8 @@ export function update(canvas, faceCanvas, drawSmiley, triggerDeath, drawCooldow
   // Camera
   const targetX = Math.max(0, Math.min(WORLD_W-canvas.width,  player.x - canvas.width/2));
   const targetY = Math.max(0, Math.min(WORLD_H-canvas.height, player.y - canvas.height/2));
-  cam.x += (targetX - cam.x) * 0.06;
-  cam.y += (targetY - cam.y) * 0.06;
+  cam.x += (targetX - cam.x) * 0.1;
+  cam.y += (targetY - cam.y) * 0.1;
 
   // Mouse world pos
   mouse.wx = mouse.x + cam.x;
@@ -153,7 +153,7 @@ export function update(canvas, faceCanvas, drawSmiley, triggerDeath, drawCooldow
     if(Math.hypot(player.x-m.x,player.y-m.y)<m.r+player.r-2){
       const dx = player.x-m.x, dy = player.y-m.y;
       const dist = Math.hypot(dx,dy)||1;
-      const push = (m.r+player.r-dist) * 6; // 👈 multiply by 6 for more bounce
+      const push = (m.r+player.r-dist) * 1.5; // 👈 multiply by 1.5 for more bounce
       player.x += (dx/dist)*push;
       player.y += (dy/dist)*push;
       if(player.invincible<=0){
