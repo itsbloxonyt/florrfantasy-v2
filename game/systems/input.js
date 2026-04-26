@@ -82,7 +82,7 @@ export function trySwapActiveSwap() {
   for (let i = 0; i < ACTIVE_COUNT; i++) {
     petalStateCache[i] = petals[i] ? { ...petals[i] } : null;
   }
-  // console.log("after swap:", petals.map(p => p.cooldown));
+  console.log("after swap:", petals.map(p => p.cooldown));
   buildPetalBarUI();
   attachSlotEvents();
   setSwapCooldown(SWAP_CD_MAX);
@@ -96,4 +96,4 @@ export function handleInput() {
   }
   keys['_KeyR'] = keys['KeyR'];
 }
-console.log("inputloaded")
+// console.log("inputloaded")
