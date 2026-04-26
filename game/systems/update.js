@@ -63,7 +63,6 @@ export function update(canvas, faceCanvas, drawSmiley, triggerDeath, drawCooldow
   player.petalAngle += spinSpeed;
   for(let i=0;i<petals.length;i++)
     petals[i].angle = player.petalAngle + (Math.PI*2/petals.length)*i;
-  // console.log("cooldowns:", petals.map(p => p.cooldown));
 
   // Move petals, handle broken/respawn
   for(let i=0;i<petals.length;i++){
