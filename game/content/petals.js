@@ -30,6 +30,7 @@ export function rebuildPetals() {
       respawnTimer: prev ? prev.respawnTimer : 0,
       healTimer: prev ? prev.healTimer : 0,
       justReady: prev ? prev.justReady : false,
+      invincible: prev ? prev.invincible : 0,
     });
   }
 
