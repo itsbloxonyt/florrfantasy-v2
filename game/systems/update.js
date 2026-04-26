@@ -169,6 +169,7 @@ export function update(canvas, faceCanvas, drawSmiley, triggerDeath, drawCooldow
     if(m.hp<=0){ killMob(i); break; }
   }
 }
+}
   // Drops update
   for(let i=drops.length-1;i>=0;i--){
     const dr = drops[i]; dr.life--;
