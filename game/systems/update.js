@@ -170,6 +170,7 @@ export function update(canvas, faceCanvas, drawSmiley, triggerDeath, drawCooldow
     const def = PETAL_TYPES[p.type];
     m.hp -= p.damage * dmgMult;
     if(def.lifeSteal) player.hp = Math.min(player.maxHp, player.hp + p.damage * dmgMult * def.lifeSteal); // lifesteal
+    if(def.thornDmg) player.hp = Math.max(0, player.hp - p.damage * def.thornDmg); // thorns
     p.hp -= m.dmg;
     p.hitCooldown = 5;
     m.hitFlash = 10;
@@ -189,6 +190,12 @@ export function update(canvas, faceCanvas, drawSmiley, triggerDeath, drawCooldow
     if(p.type==='poison'){
       m.poisoned = def.poisonDur;
       m.poisonTimer = 0;
+    }
+    if(m.bleeding>0){
+       m.bleedTimer++;
+       const ramp = PETAL_TYPES.bleed.bleedRamp;
+       if(m.bleedTimer%60===0){ m.hp -= PETAL_TYPES.bleed.bleedDps * (1 + m.bleedStacks * ramp); m.hitFlash=4; }
+       m.bleeding--;
     }
     if(petalState==='defend'){
       const bx=m.x-player.x, by=m.y-player.y, bl=Math.hypot(bx,by)||1;
