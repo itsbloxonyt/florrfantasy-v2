@@ -169,6 +169,7 @@ export function update(canvas, faceCanvas, drawSmiley, triggerDeath, drawCooldow
     const dmgMult = petalState==='defend' ? 0.35 : 1;
     const def = PETAL_TYPES[p.type];
     m.hp -= p.damage * dmgMult;
+    if(def.lifeSteal) player.hp = Math.min(player.maxHp, player.hp + p.damage * dmgMult * def.lifeSteal); // lifesteal
     p.hp -= m.dmg;
     p.hitCooldown = 5;
     m.hitFlash = 10;
