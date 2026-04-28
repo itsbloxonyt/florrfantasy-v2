@@ -11,12 +11,16 @@ export function rebuildPetals() {
   for (let i = 0; i < ACTIVE_COUNT; i++) {
     const type = activeSlots[i];
     if (!type) continue;
+    const def = PETAL_TYPES[type];
+    const count = def.count || 1; // 👈 how many copies
+    for (let c = 0; c < count; c++) { // 👈 spawn count copies
 
     const def = PETAL_TYPES[type];
     const prev = petalStateCache[i];
 
     newPetals.push({
       type,
+      slotIndex: i, // 👈 track which slot it belongs to
       angle: 0,
       r: def.r,
       damage: def.damage,
@@ -33,7 +37,7 @@ export function rebuildPetals() {
       invincible: prev ? prev.invincible : 0,
       hitCooldown: 0
     });
-  }
+    }}
 
   setPetals(newPetals);
 }
