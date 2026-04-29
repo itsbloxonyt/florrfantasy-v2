@@ -69,7 +69,8 @@ export function addPetalDrop(type) {
   if(idx !== -1){
     activeSlots[idx] = type;
     for (let i = 0; i < petals.length; i++) {
-      petalStateCache[i] = { ...petals[i] };
+      const p = petals[i];
+      if(p) petalStateCache[`${p.slotIndex}_${p.copyIndex}`] = { ...p };
     }
     rebuildPetals();
     buildPetalBarUI();
