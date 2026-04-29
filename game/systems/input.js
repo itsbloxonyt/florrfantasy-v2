@@ -46,7 +46,6 @@ export function initInput(canvas) {
       petalStateCache[`${i}_${c}`] = null;
   }
     }
-    if (petalStateCache[idx]) petalStateCache[idx].cooldown = 120;
 
     const tmp = activeSlots[idx];
     activeSlots[idx] = swapSlots[idx];
