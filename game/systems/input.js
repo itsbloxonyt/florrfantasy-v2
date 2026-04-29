@@ -72,23 +72,26 @@ export function trySwapActiveSwap() {
   if (now - lastSwapTime < SWAP_DELAY) return false;
   setLastSwapTime(now);
 
-  // 1. Save current state
-  for (let i = 0; i < petals.length; i++) {
-    const p = petals[i];
-    if(p) petalStateCache[`${p.slotIndex}_${p.copyIndex}`] = { ...p };
+ // Save active petals to cache
+for (let i = 0; i < petals.length; i++) {
+  const p = petals[i];
+  if(p) petalStateCache[`${p.slotIndex}_${p.copyIndex}`] = { ...p };
+}
+
+// Swap slots
+for (let i = 0; i < ACTIVE_COUNT; i++) {
+  const tmp = activeSlots[i];
+  activeSlots[i] = swapSlots[i];
+  swapSlots[i] = tmp;
+}
+
+// Clear cache so new slots start fresh
+for (let i = 0; i < ACTIVE_COUNT; i++) {
+  for (let c = 0; c < 10; c++) {
+    petalStateCache[`${i}_${c}`] = null;
   }
-
-  // 2. Swap slots
-  for (let i = 0; i < ACTIVE_COUNT; i++) {
-    const tmp = activeSlots[i];
-    activeSlots[i] = swapSlots[i];
-    swapSlots[i] = tmp;
-  }
-
-  // 3. Rebuild and apply cooldown
-  rebuildPetals();
-  for (let p of petals) { p.cooldown = 80; }
-
+}
+  rebuildPetals()
   buildPetalBarUI();
   attachSlotEvents();
   setSwapCooldown(SWAP_CD_MAX);
