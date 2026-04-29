@@ -42,7 +42,9 @@ export function initInput(canvas) {
     if (activeSlots[idx] === swapSlots[idx]) return;
 
     for (let i = 0; i < ACTIVE_COUNT; i++) {
-      petalStateCache[i] = petals[i] ? { ...petals[i] } : null;
+      for (let c = 0; c < 10; c++) { // 👈 clear all possible copies
+      petalStateCache[`${i}_${c}`] = null;
+  }
     }
     if (petalStateCache[idx]) petalStateCache[idx].cooldown = 120;
 
@@ -53,7 +55,9 @@ export function initInput(canvas) {
     rebuildPetals();
     slotCooldown[idx] = Date.now() + SWAP_DELAY;
     for (let i = 0; i < ACTIVE_COUNT; i++) {
-      petalStateCache[i] = petals[i] ? { ...petals[i] } : null;
+      for (let c = 0; c < 10; c++) { // 👈 clear all possible copies
+      petalStateCache[`${i}_${c}`] = null;
+    }
     }
     buildPetalBarUI();
     attachSlotEvents();
@@ -70,7 +74,9 @@ export function trySwapActiveSwap() {
   setLastSwapTime(now);
 
   for (let i = 0; i < ACTIVE_COUNT; i++) {
-    petalStateCache[i] = petals[i] ? { ...petals[i] } : null;
+    for (let c = 0; c < 10; c++) { // 👈 clear all possible copies
+    petalStateCache[`${i}_${c}`] = null;
+  }
   }
   for (let i = 0; i < ACTIVE_COUNT; i++) {
     const tmp = activeSlots[i];
@@ -80,7 +86,9 @@ export function trySwapActiveSwap() {
   rebuildPetals();
   for (let p of petals) { p.cooldown = 80; }
   for (let i = 0; i < ACTIVE_COUNT; i++) {
-    petalStateCache[i] = petals[i] ? { ...petals[i] } : null;
+    for (let c = 0; c < 10; c++) { // 👈 clear all possible copies
+    petalStateCache[`${i}_${c}`] = null;
+  }
   }
   console.log("after swap:", petals.map(p => p.cooldown));
   buildPetalBarUI();
