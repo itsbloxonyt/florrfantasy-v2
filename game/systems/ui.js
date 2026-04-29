@@ -71,7 +71,9 @@ export function attachSlotEvents() {
           dstArr[b] = tmp;
 
            for (let i = 0; i < ACTIVE_COUNT; i++) {
-            petalStateCache[i] = petals[i] ? { ...petals[i] } : null;
+            for (let c = 0; c < 10; c++) {
+            petalStateCache[`${i}_${c}`] = null;
+          }
           }
 
           rebuildPetals();
