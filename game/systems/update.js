@@ -127,6 +127,12 @@ export function update(canvas, faceCanvas, drawSmiley, triggerDeath, drawCooldow
       m.poisoned--;
       if(m.hp<=0){ killMob(i); continue; }
     }
+    if(m.bleeding>0){  // 👈 add right after poison block
+      m.bleedTimer++;
+      const ramp = PETAL_TYPES.bleed.bleedRamp;
+      if(m.bleedTimer%60===0){ m.hp -= PETAL_TYPES.bleed.bleedDps * (1 + m.bleedStacks * ramp); m.hitFlash=4; }
+      m.bleeding--;
+    }
 
     const mdx=player.x-m.x, mdy=player.y-m.y, md=Math.hypot(mdx,mdy);
     if(md>1){ m.x+=(mdx/md)*m.speed; m.y+=(mdy/md)*m.speed; }
@@ -191,11 +197,10 @@ export function update(canvas, faceCanvas, drawSmiley, triggerDeath, drawCooldow
       m.poisoned = def.poisonDur;
       m.poisonTimer = 0;
     }
-    if(m.bleeding>0){
-       m.bleedTimer++;
-       const ramp = PETAL_TYPES.bleed.bleedRamp;
-       if(m.bleedTimer%60===0){ m.hp -= PETAL_TYPES.bleed.bleedDps * (1 + m.bleedStacks * ramp); m.hitFlash=4; }
-       m.bleeding--;
+    if(p.type==='bleed'){
+      m.bleeding = def.bleedDur;
+      m.bleedTimer = 0;
+      m.bleedStacks = (m.bleedStacks || 0) + 1;
     }
     if(petalState==='defend'){
       const bx=m.x-player.x, by=m.y-player.y, bl=Math.hypot(bx,by)||1;
