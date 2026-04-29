@@ -14,7 +14,6 @@ export function rebuildPetals() {
     const def = PETAL_TYPES[type];
     const count = def.count || 1; // 👈 how many copies
     for (let c = 0; c < count; c++) { // 👈 spawn count copies
-    const def = PETAL_TYPES[type];
     const prev = petalStateCache[`${i}_${c}`];
     newPetals.push({
       type,
