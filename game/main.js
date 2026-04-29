@@ -35,7 +35,9 @@ function resetGame() {
   for(let i = 0; i < ACTIVE_COUNT; i++) activeSlots[i] = null;
   activeSlots[0] = 'basic'; activeSlots[1] = 'basic'; activeSlots[2] = 'basic';
   for (let i = 0; i < ACTIVE_COUNT; i++) {
-  petalStateCache[i] = null;
+    for (let c = 0; c < 10; c++) { // 👈 clear all possible copies
+      petalStateCache[`${i}_${c}`] = null;
+    }
  }
   rebuildPetals();
   buildPetalBarUI();
