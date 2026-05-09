@@ -1,6 +1,6 @@
 import {
   ACTIVE_COUNT, SWAP_COUNT, SWAP_DELAY, SWAP_CD_MAX,
-  activeSlots, swapSlots, petals, , petalStateCache, slotCooldown,
+  activeSlots, swapSlots, petals, petalStateCache, slotCooldown,
   setSwapCooldown, setLastSwapTime, lastSwapTime,
   player,
 } from '../state.js';
