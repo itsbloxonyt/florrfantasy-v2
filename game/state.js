@@ -34,7 +34,6 @@ export const activeSlots = [
 ];
 export const petalStateCache = Array(ACTIVE_COUNT).fill(null);
 export const swapSlots = Array(SWAP_COUNT).fill(null);
-export function getPetals() { return petals; };
 
 // Orbiting petal objects
 export let petals = [];
