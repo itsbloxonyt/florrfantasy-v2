@@ -5,24 +5,23 @@ import {
 } from '../state.js';
 import { buildPetalBarUI, attachSlotEvents } from '../systems/ui.js';
 
-export function rebuildPetals() {
+export function rebuildPetals(applySwapCooldown = false) {
   const newPetals = [];
-
   for (let i = 0; i < ACTIVE_COUNT; i++) {
     const type = activeSlots[i];
     if (!type) continue;
     const def = PETAL_TYPES[type];
-    const count = def.count || 1; // 👈 how many copies
-    for (let c = 0; c < count; c++) { // 👈 spawn count copies
-    const prev = petalStateCache[`${i}_${c}`];
-    newPetals.push({
+    const count = def.count || 1;
+    for (let c = 0; c < count; c++) {
+      const prev = petalStateCache[`${i}_${c}`];
+      newPetals.push({
       type,
       slotIndex: i, // 👈 track which slot it belongs to
       copyIndex: c,
       angle: 0,
       r: def.r,
       damage: def.damage,
-      cooldown: (prev && prev.type === type) ? prev.cooldown : 0,
+      cooldown: applySwapCooldown ? 80 : (prev && prev.type === type) ? prev.cooldown : 0,
       x: prev ? prev.x : player.x,
       y: prev ? prev.y : player.y,
       poisonTimer: prev ? prev.poisonTimer : 0,
@@ -36,7 +35,6 @@ export function rebuildPetals() {
       hitCooldown: 0
     });
     }}
-
   setPetals(newPetals);
 }
 
