@@ -1,6 +1,6 @@
 import {
   ACTIVE_COUNT, SWAP_COUNT, SWAP_DELAY, SWAP_CD_MAX,
-  activeSlots, swapSlots, petals, petalStateCache, slotCooldown,
+  activeSlots, swapSlots, petals, getPetals. petalStateCache, slotCooldown,
   setSwapCooldown, setLastSwapTime, lastSwapTime,
   player,
 } from '../state.js';
@@ -86,7 +86,7 @@ export function trySwapActiveSwap() {
   }
 
   rebuildPetals();
-  for (let p of petals) { p.cooldown = 80; } // 👈 apply cd after rebuild
+  for (let p of getPetals()) { p.cooldown = 80; } // 👈 apply cd after rebuild
   buildPetalBarUI();
   attachSlotEvents();
   setSwapCooldown(SWAP_CD_MAX);
