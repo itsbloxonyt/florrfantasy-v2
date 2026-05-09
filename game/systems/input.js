@@ -72,33 +72,27 @@ export function trySwapActiveSwap() {
   if (now - lastSwapTime < SWAP_DELAY) return false;
   setLastSwapTime(now);
 
- // Save active petals to cache
-for (let i = 0; i < petals.length; i++) {
-  const p = petals[i];
-  if(p) petalStateCache[`${p.slotIndex}_${p.copyIndex}`] = { ...p };
-}
-
-// Swap slots
-for (let i = 0; i < ACTIVE_COUNT; i++) {
-  const tmp = activeSlots[i];
-  activeSlots[i] = swapSlots[i];
-  swapSlots[i] = tmp;
-}
-
-// Clear cache so new slots start fresh
-for (let i = 0; i < ACTIVE_COUNT; i++) {
-  for (let c = 0; c < 10; c++) {
-    petalStateCache[`${i}_${c}`] = null;
+  // Save active petals to cache
+  for (let i = 0; i < petals.length; i++) {
+    const p = petals[i];
+    if(p) petalStateCache[`${p.slotIndex}_${p.copyIndex}`] = { ...p };
   }
-}
-  rebuildPetals()
+
+  // Swap slots
+  for (let i = 0; i < ACTIVE_COUNT; i++) {
+    const tmp = activeSlots[i];
+    activeSlots[i] = swapSlots[i];
+    swapSlots[i] = tmp;
+  }
+
+  rebuildPetals();
+  for (let p of petals) { p.cooldown = 80; } // 👈 apply cd after rebuild
   buildPetalBarUI();
   attachSlotEvents();
   setSwapCooldown(SWAP_CD_MAX);
   setLastSwapTime(Date.now());
   return true;
 }
-
 export function handleInput() {
   if (keyPressed("KeyR")) {
     trySwapActiveSwap();
